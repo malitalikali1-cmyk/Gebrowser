@@ -233,12 +233,8 @@
         <p>&copy; 2026 GEBROWS. Tüm hakları saklıdır.</p>
     </footer>
 
-    <!-- Yeni Hızlı ve Kesin Çalışan JavaScript Kodu -->
+    <!-- Anında Çalışan Yerel JavaScript Kodu -->
     <script>
-        const namespace = "gebrows_official_site";
-        const key = "likes_count";
-        let userHasLiked = localStorage.getItem('user_has_liked_gebrows_v4') === 'true';
-
         // Sayı Formatlama (B, Mn, Mr)
         function formatLikes(num) {
             if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace('.0', '') + 'Mr';
@@ -247,27 +243,18 @@
             return num;
         }
 
-        // Sunucudan Toplam Beğeniyi Getir
-        function getGlobalLikes() {
-            fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.count !== undefined) {
-                        document.getElementById('likeCount').innerText = formatLikes(data.count);
-                    }
-                })
-                .catch(() => {
-                    // İlk istekse veya veri yoksa
-                    document.getElementById('likeCount').innerText = userHasLiked ? "1" : "0";
-                });
-        }
+        // Başlangıç değerleri
+        let likes = parseInt(localStorage.getItem('gebrows_total_likes')) || 0;
+        let isLiked = localStorage.getItem('gebrows_is_liked') === 'true';
 
-        // Arayüzü Güncelle
-        function updateBtnState() {
+        function updateUI() {
             const btn = document.getElementById('likeBtn');
             const text = document.getElementById('likeText');
+            const count = document.getElementById('likeCount');
 
-            if (userHasLiked) {
+            count.innerText = formatLikes(likes);
+
+            if (isLiked) {
                 btn.classList.add('liked');
                 text.innerText = "Beğenildi";
             } else {
@@ -276,32 +263,25 @@
             }
         }
 
-        // Tıklama Fonksiyonu
         function toggleLike() {
-            if (!userHasLiked) {
-                // Sayıyı +1 Yap
-                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
-                    .then(res => res.json())
-                    .then(data => {
-                        let currentCount = data.count || 1;
-                        document.getElementById('likeCount').innerText = formatLikes(currentCount);
-                    })
-                    .catch(() => {
-                        let currentCount = parseInt(document.getElementById('likeCount').innerText) || 0;
-                        document.getElementById('likeCount').innerText = formatLikes(currentCount + 1);
-                    });
-
-                userHasLiked = true;
-                localStorage.setItem('user_has_liked_gebrows_v4', 'true');
-                updateBtnState();
+            if (isLiked) {
+                likes--;
+                isLiked = false;
             } else {
-                alert("Zaten beğendiniz! İlginiz için teşekkürler.");
+                likes++;
+                isLiked = true;
             }
+
+            // Hafızaya kaydet
+            localStorage.setItem('gebrows_total_likes', likes);
+            localStorage.setItem('gebrows_is_liked', isLiked);
+
+            // Arayüzü güncelle
+            updateUI();
         }
 
-        // Başlangıç Kurulumu
-        updateBtnState();
-        getGlobalLikes();
+        // Sayfa yüklendiğinde ekrana yaz
+        updateUI();
     </script>
 
 </body>
