@@ -122,6 +122,7 @@
         .like-btn.liked {
             background: #38bdf8;
             color: #0f172a;
+            cursor: default;
         }
 
         .like-btn:active {
@@ -227,10 +228,11 @@
     </footer>
 
     <script>
-        const namespace = "gebrows_live_v2";
+        // Yepyeni ve tertemiz bir sayaç alanı
+        const namespace = "gebrows_official_v3";
         const key = "likes";
 
-        let userHasLiked = localStorage.getItem('gebrows_liked_v2') === 'true';
+        let userHasLiked = localStorage.getItem('gebrows_liked_v3') === 'true';
         let currentLikes = 0;
 
         function formatLikes(num) {
@@ -272,10 +274,11 @@
         }
 
         function toggleLike() {
+            // Eğer daha önce beğenmediyse arttır
             if (!userHasLiked) {
                 userHasLiked = true;
                 currentLikes++;
-                localStorage.setItem('gebrows_liked_v2', 'true');
+                localStorage.setItem('gebrows_liked_v3', 'true');
                 renderUI();
 
                 fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
@@ -287,22 +290,8 @@
                         }
                     })
                     .catch(() => {});
-            } else {
-                userHasLiked = false;
-                currentLikes = Math.max(0, currentLikes - 1);
-                localStorage.setItem('gebrows_liked_v2', 'false');
-                renderUI();
-
-                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/down`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data && typeof data.count === 'number') {
-                            currentLikes = data.count;
-                            renderUI();
-                        }
-                    })
-                    .catch(() => {});
             }
+            // Artık geri alma yok, yanlışlıkla tekrar basılırsa sayaç bozulmaz!
         }
 
         renderUI();
