@@ -233,10 +233,11 @@
         <p>&copy; 2026 GEBROWS. Tüm hakları saklıdır.</p>
     </footer>
 
-    <!-- Canlı Veritabanlı Sıfırlanmış JavaScript Kodu -->
+    <!-- Yeni Hızlı ve Kesin Çalışan JavaScript Kodu -->
     <script>
-        const apiKey = "gebrowser_likes_v3_clean"; 
-        let userHasLiked = localStorage.getItem('user_has_liked_gebrowser_v3') === 'true';
+        const namespace = "gebrows_official_site";
+        const key = "likes_count";
+        let userHasLiked = localStorage.getItem('user_has_liked_gebrows_v4') === 'true';
 
         // Sayı Formatlama (B, Mn, Mr)
         function formatLikes(num) {
@@ -246,20 +247,22 @@
             return num;
         }
 
-        // Sunucudan Toplam Beğeni Sayısını Çek
+        // Sunucudan Toplam Beğeniyi Getir
         function getGlobalLikes() {
-            fetch(`https://api.countapi.xyz/get/gebrows_site/${apiKey}`)
+            fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/`)
                 .then(res => res.json())
                 .then(data => {
-                    let total = data.value || 0;
-                    document.getElementById('likeCount').innerText = formatLikes(total);
+                    if (data.count !== undefined) {
+                        document.getElementById('likeCount').innerText = formatLikes(data.count);
+                    }
                 })
                 .catch(() => {
-                    document.getElementById('likeCount').innerText = "0";
+                    // İlk istekse veya veri yoksa
+                    document.getElementById('likeCount').innerText = userHasLiked ? "1" : "0";
                 });
         }
 
-        // Arayüz Durumunu Güncelle
+        // Arayüzü Güncelle
         function updateBtnState() {
             const btn = document.getElementById('likeBtn');
             const text = document.getElementById('likeText');
@@ -273,23 +276,30 @@
             }
         }
 
-        // Tıklama İşlemi
+        // Tıklama Fonksiyonu
         function toggleLike() {
             if (!userHasLiked) {
-                fetch(`https://api.countapi.xyz/hit/gebrows_site/${apiKey}`)
+                // Sayıyı +1 Yap
+                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
                     .then(res => res.json())
                     .then(data => {
-                        document.getElementById('likeCount').innerText = formatLikes(data.value);
-                        userHasLiked = true;
-                        localStorage.setItem('user_has_liked_gebrowser_v3', 'true');
-                        updateBtnState();
+                        let currentCount = data.count || 1;
+                        document.getElementById('likeCount').innerText = formatLikes(currentCount);
+                    })
+                    .catch(() => {
+                        let currentCount = parseInt(document.getElementById('likeCount').innerText) || 0;
+                        document.getElementById('likeCount').innerText = formatLikes(currentCount + 1);
                     });
+
+                userHasLiked = true;
+                localStorage.setItem('user_has_liked_gebrows_v4', 'true');
+                updateBtnState();
             } else {
                 alert("Zaten beğendiniz! İlginiz için teşekkürler.");
             }
         }
 
-        // Sayfa Yüklendiğinde
+        // Başlangıç Kurulumu
         updateBtnState();
         getGlobalLikes();
     </script>
