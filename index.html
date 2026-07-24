@@ -204,7 +204,7 @@
             <button id="likeBtn" class="like-btn" onclick="toggleLike()">
                 <i class="fas fa-thumbs-up"></i>
                 <span id="likeText">Beğen</span>
-                <span id="likeCount" class="like-count">...</span>
+                <span id="likeCount" class="like-count">0</span>
             </button>
         </div>
     </section>
@@ -233,10 +233,10 @@
         <p>&copy; 2026 GEBROWS. Tüm hakları saklıdır.</p>
     </footer>
 
-    <!-- Canlı Veritabanlı Beğeni JavaScript Kodu -->
+    <!-- Canlı Veritabanlı Sıfırlanmış JavaScript Kodu -->
     <script>
-        const apiKey = "gebrowser_official_likes_counter_2026"; 
-        let userHasLiked = localStorage.getItem('user_has_liked_gebrowser') === 'true';
+        const apiKey = "gebrowser_likes_v3_clean"; 
+        let userHasLiked = localStorage.getItem('user_has_liked_gebrowser_v3') === 'true';
 
         // Sayı Formatlama (B, Mn, Mr)
         function formatLikes(num) {
@@ -255,7 +255,6 @@
                     document.getElementById('likeCount').innerText = formatLikes(total);
                 })
                 .catch(() => {
-                    // İlk defa oluşturuluyorsa 0 göster
                     document.getElementById('likeCount').innerText = "0";
                 });
         }
@@ -277,17 +276,15 @@
         // Tıklama İşlemi
         function toggleLike() {
             if (!userHasLiked) {
-                // Kullanıcı beğenmemişse sunucudaki toplam sayıyı +1 yap
                 fetch(`https://api.countapi.xyz/hit/gebrows_site/${apiKey}`)
                     .then(res => res.json())
                     .then(data => {
                         document.getElementById('likeCount').innerText = formatLikes(data.value);
                         userHasLiked = true;
-                        localStorage.setItem('user_has_liked_gebrowser', 'true');
+                        localStorage.setItem('user_has_liked_gebrowser_v3', 'true');
                         updateBtnState();
                     });
             } else {
-                // Kullanıcı önceden beğendiyse (1 kişi 1 defa beğenebilir)
                 alert("Zaten beğendiniz! İlginiz için teşekkürler.");
             }
         }
