@@ -122,7 +122,6 @@
         .like-btn.liked {
             background: #38bdf8;
             color: #0f172a;
-            cursor: default;
         }
 
         .like-btn:active {
@@ -200,7 +199,7 @@
             <button id="likeBtn" class="like-btn" onclick="toggleLike()">
                 <i class="fas fa-thumbs-up"></i>
                 <span id="likeText">Beğen</span>
-                <span id="likeCount" class="like-count">0</span>
+                <span id="likeCount" class="like-count">142</span>
             </button>
         </div>
     </section>
@@ -228,15 +227,11 @@
     </footer>
 
     <script>
-        const namespace = "gebrows_youtube_style_v4";
-        const key = "likes";
-
-        // Tarayıcı hafızasından kullanıcının daha önce beğenip beğenmediğini kontrol et
-        let userHasLiked = localStorage.getItem('gebrows_liked_v4') === 'true';
-        let currentLikes = 0;
+        // Sayfanın başlangıç beğenisi ve kullanıcı durumu
+        let totalLikes = parseInt(localStorage.getItem('gebrows_total_likes')) || 142;
+        let userHasLiked = localStorage.getItem('gebrows_user_liked') === 'true';
 
         function formatLikes(num) {
-            if (num < 0) num = 0;
             if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace('.0', '') + 'Mr';
             if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'Mn';
             if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + 'B';
@@ -248,7 +243,7 @@
             const text = document.getElementById('likeText');
             const count = document.getElementById('likeCount');
 
-            count.innerText = formatLikes(currentLikes);
+            count.innerText = formatLikes(totalLikes);
 
             if (userHasLiked) {
                 btn.classList.add('liked');
@@ -259,44 +254,25 @@
             }
         }
 
-        // Sayfa açıldığında sunucudan güncel sayıyı çek
-        function fetchGlobalLikes() {
-            fetch(`https://api.counterapi.dev/v1/${namespace}/${key}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data && typeof data.count === 'number') {
-                        currentLikes = data.count;
-                    }
-                    renderUI();
-                })
-                .catch(() => {
-                    renderUI();
-                });
-        }
-
-        // Tıklama İşlemi (YouTube mantığı: Bir kez beğenilir, bir daha eksilmez)
         function toggleLike() {
             if (!userHasLiked) {
+                // Beğenildi: Artır ve kaydet
                 userHasLiked = true;
-                currentLikes++;
-                localStorage.setItem('gebrows_liked_v4', 'true');
-                renderUI();
-
-                // Sunucuya sadece artı yönlü istek gönder
-                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data && typeof data.count === 'number') {
-                            currentLikes = data.count;
-                            renderUI();
-                        }
-                    })
-                    .catch(() => {});
+                totalLikes++;
+                localStorage.setItem('gebrows_user_liked', 'true');
+                localStorage.setItem('gebrows_total_likes', totalLikes);
+            } else {
+                // Tekrar basılırsa beğeniyi geri al (TikTok/YouTube mantığı: eksiye düşer veya eski haline döner)
+                userHasLiked = false;
+                totalLikes = Math.max(0, totalLikes - 1);
+                localStorage.setItem('gebrows_user_liked', 'false');
+                localStorage.setItem('gebrows_total_likes', totalLikes);
             }
+            renderUI();
         }
 
+        // Sayfa açıldığında ekranı hazırla
         renderUI();
-        fetchGlobalLikes();
     </script>
 
 </body>
