@@ -228,11 +228,11 @@
     </footer>
 
     <script>
-        // Yepyeni ve tertemiz bir sayaç alanı
-        const namespace = "gebrows_official_v3";
+        const namespace = "gebrows_youtube_style_v4";
         const key = "likes";
 
-        let userHasLiked = localStorage.getItem('gebrows_liked_v3') === 'true';
+        // Tarayıcı hafızasından kullanıcının daha önce beğenip beğenmediğini kontrol et
+        let userHasLiked = localStorage.getItem('gebrows_liked_v4') === 'true';
         let currentLikes = 0;
 
         function formatLikes(num) {
@@ -259,6 +259,7 @@
             }
         }
 
+        // Sayfa açıldığında sunucudan güncel sayıyı çek
         function fetchGlobalLikes() {
             fetch(`https://api.counterapi.dev/v1/${namespace}/${key}`)
                 .then(res => res.json())
@@ -273,14 +274,15 @@
                 });
         }
 
+        // Tıklama İşlemi (YouTube mantığı: Bir kez beğenilir, bir daha eksilmez)
         function toggleLike() {
-            // Eğer daha önce beğenmediyse arttır
             if (!userHasLiked) {
                 userHasLiked = true;
                 currentLikes++;
-                localStorage.setItem('gebrows_liked_v3', 'true');
+                localStorage.setItem('gebrows_liked_v4', 'true');
                 renderUI();
 
+                // Sunucuya sadece artı yönlü istek gönder
                 fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
                     .then(res => res.json())
                     .then(data => {
@@ -291,7 +293,6 @@
                     })
                     .catch(() => {});
             }
-            // Artık geri alma yok, yanlışlıkla tekrar basılırsa sayaç bozulmaz!
         }
 
         renderUI();
