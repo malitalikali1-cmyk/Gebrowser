@@ -1,298 +1,301 @@
-<!DOCTYPE html>
+teşekürler yazısı gelmesin naptın eski kodu ver ozaman<!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEBROWS - Hızlı, Güvenli ve Akıllı Tarayıcı</title>
-    <!-- FontAwesome İkonları -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GEBROWS - Hızlı, Güvenli ve Akıllı Tarayıcı</title>
+    <!-- FontAwesome İkonları -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            line-height: 1.6;
-        }
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            line-height: 1.6;
+        }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 10%;
-            background: rgba(15, 23, 42, 0.9);
-            border-bottom: 1px solid #1e293b;
-        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid #1e293b;
+        }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: #38bdf8;
-            letter-spacing: 1px;
-        }
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #38bdf8;
+            letter-spacing: 1px;
+        }
 
-        nav a {
-            color: #94a3b8;
-            text-decoration: none;
-            margin-left: 20px;
-            transition: 0.3s;
-        }
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
 
-        nav a:hover {
-            color: #38bdf8;
-        }
+        nav a:hover {
+            color: #38bdf8;
+        }
 
-        .hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            min-height: 80vh;
-            padding: 0 20px;
-        }
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 80vh;
+            padding: 0 20px;
+        }
 
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            background: linear-gradient(to right, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        .hero p {
-            font-size: 1.2rem;
-            color: #94a3b8;
-            max-width: 600px;
-            margin-bottom: 30px;
-        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
 
-        .download-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            background: linear-gradient(135deg, #0284c7, #2563eb);
-            color: #ffffff;
-            padding: 16px 36px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.4);
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(135deg, #0284c7, #2563eb);
+            color: #ffffff;
+            padding: 16px 36px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 10px 25px -5px rgba(14, 165, 233, 0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
 
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px -5px rgba(14, 165, 233, 0.6);
-            background: linear-gradient(135deg, #0369a1, #1d4ed8);
-        }
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(14, 165, 233, 0.6);
+            background: linear-gradient(135deg, #0369a1, #1d4ed8);
+        }
 
-        /* --- Beğen Butonu Stilleri --- */
-        .like-container {
-            margin-top: 10px;
-        }
+        /* --- Beğen Butonu Stilleri --- */
+        .like-container {
+            margin-top: 10px;
+        }
 
-        .like-btn {
-            background: #1e293b;
-            color: #38bdf8;
-            border: 2px solid #38bdf8;
-            padding: 10px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 30px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
-            transition: all 0.2s ease;
-        }
+        .like-btn {
+            background: #1e293b;
+            color: #38bdf8;
+            border: 2px solid #38bdf8;
+            padding: 10px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+            transition: all 0.2s ease;
+        }
 
-        .like-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
-        }
+        .like-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
+        }
 
-        .like-btn.liked {
-            background: #38bdf8;
-            color: #0f172a;
-        }
+        .like-btn.liked {
+            background: #38bdf8;
+            color: #0f172a;
+        }
 
-        .like-btn:active {
-            transform: scale(0.95);
-        }
+        .like-btn:active {
+            transform: scale(0.95);
+        }
 
-        .like-count {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 2px 10px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-        }
+        .like-count {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+        }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-            padding: 60px 10%;
-            background-color: #1e293b;
-        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 60px 10%;
+            background-color: #1e293b;
+        }
 
-        .feature-card {
-            background: #0f172a;
-            padding: 30px;
-            border-radius: 12px;
-            border: 1px solid #334155;
-            text-align: center;
-        }
+        .feature-card {
+            background: #0f172a;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            text-align: center;
+        }
 
-        .feature-card i {
-            font-size: 2.5rem;
-            color: #38bdf8;
-            margin-bottom: 15px;
-        }
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #38bdf8;
+            margin-bottom: 15px;
+        }
 
-        .feature-card h3 {
-            margin-bottom: 10px;
-            color: #f1f5f9;
-        }
+        .feature-card h3 {
+            margin-bottom: 10px;
+            color: #f1f5f9;
+        }
 
-        .feature-card p {
-            color: #94a3b8;
-            font-size: 0.95rem;
-        }
+        .feature-card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
 
-        footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #0f172a;
-            color: #64748b;
-            border-top: 1px solid #1e293b;
-            font-size: 0.9rem;
-        }
-    </style>
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #0f172a;
+            color: #64748b;
+            border-top: 1px solid #1e293b;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Header / Navigasyon -->
-    <header>
-        <div class="logo">GEBROWS</div>
-        <nav>
-            <a href="#ozellikler">Özellikler</a>
-            <a href="https://github.com/malitalikali1-cmyk/Gebrowser/releases/download/v1.0.0/GEBROWS-Setup.exe">İndir</a>
-        </nav>
-    </header>
+    <!-- Header / Navigasyon -->
+    <header>
+        <div class="logo">GEBROWS</div>
+        <nav>
+            <a href="#ozellikler">Özellikler</a>
+            <a href="https://github.com/malitalikali1-cmyk/Gebrowser/releases/download/v1.0.0/GEBROWS-Setup.exe">İndir</a>
+        </nav>
+    </header>
 
-    <!-- Ana Ekran (Hero) -->
-    <section class="hero">
-        <h1>Geleceğin Web Tarayıcısı</h1>
-        <p>GEBROWS ile daha hızlı, güvenli ve kişiselleştirilmiş bir internet deneyimine adım atın.</p>
-        
-        <!-- İndirme Bağlantısı -->
-        <a href="https://github.com/malitalikali1-cmyk/Gebrowser/releases/download/v1.0.0/GEBROWS-Setup.exe" class="download-btn">
-            <i class="fas fa-download"></i> GEBROWS'u İndir
-        </a>
+    <!-- Ana Ekran (Hero) -->
+    <section class="hero">
+        <h1>Geleceğin Web Tarayıcısı</h1>
+        <p>GEBROWS ile daha hızlı, güvenli ve kişiselleştirilmiş bir internet deneyimine adım atın.</p>
+        
+        <!-- İndirme Bağlantısı -->
+        <a href="https://github.com/malitalikali1-cmyk/Gebrowser/releases/download/v1.0.0/GEBROWS-Setup.exe" class="download-btn">
+            <i class="fas fa-download"></i> GEBROWS'u İndir
+        </a>
 
-        <!-- Beğen Butonu -->
-        <div class="like-container">
-            <button id="likeBtn" class="like-btn" onclick="toggleLike()">
-                <i class="fas fa-thumbs-up"></i>
-                <span id="likeText">Beğen</span>
-                <span id="likeCount" class="like-count">...</span>
-            </button>
-        </div>
-    </section>
+        <!-- Beğen Butonu -->
+        <div class="like-container">
+            <button id="likeBtn" class="like-btn" onclick="toggleLike()">
+                <i class="fas fa-thumbs-up"></i>
+                <span id="likeText">Beğen</span>
+                <span id="likeCount" class="like-count">...</span>
+            </button>
+        </div>
+    </section>
 
-    <!-- Özellikler Bölümü -->
-    <section class="features" id="ozellikler">
-        <div class="feature-card">
-            <i class="fas fa-bolt"></i>
-            <h3>Yüksek Hız</h3>
-            <p>Optimize edilmiş altyapısıyla sayfaları milisaniyeler içinde yükleyin.</p>
-        </div>
-        <div class="feature-card">
-            <i class="fas fa-shield-halved"></i>
-            <h3>Gelişmiş Güvenlik</h3>
-            <p>Gizliliğinizi koruyan gelişmiş güvenlik ve profil yapısı.</p>
-        </div>
-        <div class="feature-card">
-            <i class="fas fa-wand-magic-sparkles"></i>
-            <h3>Modern Arayüz</h3>
-            <p>Göz yormayan, minimalist ve şık tasarımıyla gezinmenin keyfini çıkarın.</p>
-        </div>
-    </section>
+    <!-- Özellikler Bölümü -->
+    <section class="features" id="ozellikler">
+        <div class="feature-card">
+            <i class="fas fa-bolt"></i>
+            <h3>Yüksek Hız</h3>
+            <p>Optimize edilmiş altyapısıyla sayfaları milisaniyeler içinde yükleyin.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-shield-halved"></i>
+            <h3>Gelişmiş Güvenlik</h3>
+            <p>Gizliliğinizi koruyan gelişmiş güvenlik ve profil yapısı.</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-wand-magic-sparkles"></i>
+            <h3>Modern Arayüz</h3>
+            <p>Göz yormayan, minimalist ve şık tasarımıyla gezinmenin keyfini çıkarın.</p>
+        </div>
+    </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2026 GEBROWS. Tüm hakları saklıdır.</p>
-    </footer>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 GEBROWS. Tüm hakları saklıdır.</p>
+    </footer>
 
-    <!-- Canlı Veritabanlı Beğeni JavaScript Kodu -->
-    <script>
-        const apiKey = "gebrowser_official_likes_counter_2026"; 
-        let userHasLiked = localStorage.getItem('user_has_liked_gebrowser') === 'true';
+    <!-- Canlı Veritabanlı Beğeni JavaScript Kodu -->
+    <script>
+        const apiKey = "gebrowser_official_likes_counter_2026"; 
+        let userHasLiked = localStorage.getItem('user_has_liked_gebrowser') === 'true';
 
-        // Sayı Formatlama (B, Mn, Mr)
-        function formatLikes(num) {
-            if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace('.0', '') + 'Mr';
-            if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'Mn';
-            if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + 'B';
-            return num;
-        }
+        // Sayı Formatlama (B, Mn, Mr)
+        function formatLikes(num) {
+            if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace('.0', '') + 'Mr';
+            if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'Mn';
+            if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + 'B';
+            return num;
+        }
 
-        // Sunucudan Toplam Beğeni Sayısını Çek
-        function getGlobalLikes() {
-            fetch(`https://api.countapi.xyz/get/gebrows_site/${apiKey}`)
-                .then(res => res.json())
-                .then(data => {
-                    let total = data.value || 0;
-                    document.getElementById('likeCount').innerText = formatLikes(total);
-                })
-                .catch(() => {
-                    document.getElementById('likeCount').innerText = "0";
-                });
-        }
+        // Sunucudan Toplam Beğeni Sayısını Çek
+        function getGlobalLikes() {
+            fetch(`https://api.countapi.xyz/get/gebrows_site/${apiKey}`)
+                .then(res => res.json())
+                .then(data => {
+                    let total = data.value || 0;
+                    document.getElementById('likeCount').innerText = formatLikes(total);
+                })
+                .catch(() => {
+                    // İlk defa oluşturuluyorsa 0 göster
+                    document.getElementById('likeCount').innerText = "0";
+                });
+        }
 
-        // Arayüz Durumunu Güncelle
-        function updateBtnState() {
-            const btn = document.getElementById('likeBtn');
-            const text = document.getElementById('likeText');
+        // Arayüz Durumunu Güncelle
+        function updateBtnState() {
+            const btn = document.getElementById('likeBtn');
+            const text = document.getElementById('likeText');
 
-            if (userHasLiked) {
-                btn.classList.add('liked');
-                text.innerText = "Beğenildi";
-            } else {
-                btn.classList.remove('liked');
-                text.innerText = "Beğen";
-            }
-        }
+            if (userHasLiked) {
+                btn.classList.add('liked');
+                text.innerText = "Beğenildi";
+            } else {
+                btn.classList.remove('liked');
+                text.innerText = "Beğen";
+            }
+        }
 
-        // Tıklama İşlemi
-        function toggleLike() {
-            if (!userHasLiked) {
-                // Kullanıcı beğenmemişse sunucudaki toplam sayıyı +1 yap
-                fetch(`https://api.countapi.xyz/hit/gebrows_site/${apiKey}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        document.getElementById('likeCount').innerText = formatLikes(data.value);
-                        userHasLiked = true;
-                        localStorage.setItem('user_has_liked_gebrowser', 'true');
-                        updateBtnState();
-                    });
-            }
-            // Tekrar basıldığında uyarı yazısı çıkartmaz, sessizce kalır.
-        }
+        // Tıklama İşlemi
+        function toggleLike() {
+            if (!userHasLiked) {
+                // Kullanıcı beğenmemişse sunucudaki toplam sayıyı +1 yap
+                fetch(`https://api.countapi.xyz/hit/gebrows_site/${apiKey}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById('likeCount').innerText = formatLikes(data.value);
+                        userHasLiked = true;
+                        localStorage.setItem('user_has_liked_gebrowser', 'true');
+                        updateBtnState();
+                    });
+            } else {
+                // Kullanıcı önceden beğendiyse (1 kişi 1 defa beğenebilir)
+                alert("Zaten beğendiniz! İlginiz için teşekkürler.");
+            }
+        }
 
-        // Sayfa Yüklendiğinde
-        updateBtnState();
-        getGlobalLikes();
-    </script>
+        // Sayfa Yüklendiğinde
+        updateBtnState();
+        getGlobalLikes();
+    </script>
 
 </body>
 </html>
