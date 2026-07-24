@@ -204,7 +204,7 @@
             <button id="likeBtn" class="like-btn" onclick="toggleLike()">
                 <i class="fas fa-thumbs-up"></i>
                 <span id="likeText">Beğen</span>
-                <span id="likeCount" class="like-count">...</span>
+                <span id="likeCount" class="like-count">0</span>
             </button>
         </div>
     </section>
@@ -233,13 +233,12 @@
         <p>&copy; 2026 GEBROWS. Tüm hakları saklıdır.</p>
     </footer>
 
-    <!-- Canlı Veritabanlı Beğeni JavaScript Kodu (counterapi.dev) -->
+    <!-- Canlı Veritabanlı Beğeni JavaScript Kodu -->
     <script>
         const namespace = "gebrows_official_2026";
         const key = "likes";
         let userHasLiked = localStorage.getItem('user_has_liked_gebrowser') === 'true';
 
-        // Sayı Formatlama (B, Mn, Mr)
         function formatLikes(num) {
             if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace('.0', '') + 'Mr';
             if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'Mn';
@@ -247,7 +246,6 @@
             return num;
         }
 
-        // Sunucudan Toplam Beğeni Sayısını Çek
         function getGlobalLikes() {
             fetch(`https://api.counterapi.dev/v1/${namespace}/${key}`)
                 .then(res => {
@@ -263,7 +261,6 @@
                 });
         }
 
-        // Arayüz Durumunu Güncelle
         function updateBtnState() {
             const btn = document.getElementById('likeBtn');
             const text = document.getElementById('likeText');
@@ -277,7 +274,6 @@
             }
         }
 
-        // Tıklama İşlemi
         function toggleLike() {
             if (!userHasLiked) {
                 fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
@@ -292,7 +288,6 @@
             }
         }
 
-        // Sayfa Yüklendiğinde
         updateBtnState();
         getGlobalLikes();
     </script>
