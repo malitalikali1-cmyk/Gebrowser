@@ -120,7 +120,6 @@
             box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
         }
 
-        /* Beğenilince Buton Maviye Döner */
         .like-btn.liked {
             background: #38bdf8;
             color: #0f172a;
@@ -205,7 +204,7 @@
             <button id="likeBtn" class="like-btn" onclick="toggleLike()">
                 <i class="fas fa-thumbs-up"></i>
                 <span id="likeText">Beğen</span>
-                <span id="likeCount" class="like-count">0</span>
+                <span id="likeCount" class="like-count">...</span>
             </button>
         </div>
     </section>
@@ -234,10 +233,10 @@
         <p>&copy; 2026 GEBROWS. Tüm hakları saklıdır.</p>
     </footer>
 
-    <!-- Bug'sız Tek Haklı Beğeni JavaScript Kodu -->
+    <!-- Canlı Veritabanlı Beğeni JavaScript Kodu -->
     <script>
-        let likes = parseInt(localStorage.getItem('gebrowser_likes')) || 0;
-        let isLiked = localStorage.getItem('gebrowser_has_liked') === 'true';
+        const apiKey = "gebrowser_official_likes_counter_2026"; 
+        let userHasLiked = localStorage.getItem('user_has_liked_gebrowser') === 'true';
 
         // Sayı Formatlama (B, Mn, Mr)
         function formatLikes(num) {
@@ -247,15 +246,26 @@
             return num;
         }
 
-        // Arayüzü Güncelleme
-        function updateUI() {
+        // Sunucudan Toplam Beğeni Sayısını Çek
+        function getGlobalLikes() {
+            fetch(`https://api.countapi.xyz/get/gebrows_site/${apiKey}`)
+                .then(res => res.json())
+                .then(data => {
+                    let total = data.value || 0;
+                    document.getElementById('likeCount').innerText = formatLikes(total);
+                })
+                .catch(() => {
+                    // İlk defa oluşturuluyorsa 0 göster
+                    document.getElementById('likeCount').innerText = "0";
+                });
+        }
+
+        // Arayüz Durumunu Güncelle
+        function updateBtnState() {
             const btn = document.getElementById('likeBtn');
             const text = document.getElementById('likeText');
-            const count = document.getElementById('likeCount');
 
-            count.innerText = formatLikes(likes);
-
-            if (isLiked) {
+            if (userHasLiked) {
                 btn.classList.add('liked');
                 text.innerText = "Beğenildi";
             } else {
@@ -264,28 +274,27 @@
             }
         }
 
-        // Tıklama Mantığı
+        // Tıklama İşlemi
         function toggleLike() {
-            if (isLiked) {
-                // Önceden beğendiyse geri al
-                likes--;
-                isLiked = false;
+            if (!userHasLiked) {
+                // Kullanıcı beğenmemişse sunucudaki toplam sayıyı +1 yap
+                fetch(`https://api.countapi.xyz/hit/gebrows_site/${apiKey}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById('likeCount').innerText = formatLikes(data.value);
+                        userHasLiked = true;
+                        localStorage.setItem('user_has_liked_gebrowser', 'true');
+                        updateBtnState();
+                    });
             } else {
-                // Beğenmediyse 1 artır
-                likes++;
-                isLiked = true;
+                // Kullanıcı önceden beğendiyse (1 kişi 1 defa beğenebilir)
+                alert("Zaten beğendiniz! İlginiz için teşekkürler.");
             }
-
-            // Hafızaya kaydet
-            localStorage.setItem('gebrowser_likes', likes);
-            localStorage.setItem('gebrowser_has_liked', isLiked);
-
-            // Ekranı güncelle
-            updateUI();
         }
 
-        // Sayfa açıldığında durumu yükle
-        updateUI();
+        // Sayfa Yüklendiğinde
+        updateBtnState();
+        getGlobalLikes();
     </script>
 
 </body>
