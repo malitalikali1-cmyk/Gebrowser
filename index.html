@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GEBROWS - Hızlı, Güvenli ve Akıllı Tarayıcı</title>
-    <!-- FontAwesome İkonları -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -180,7 +179,6 @@
 </head>
 <body>
 
-    <!-- Header / Navigasyon -->
     <header>
         <div class="logo">GEBROWS</div>
         <nav>
@@ -189,17 +187,14 @@
         </nav>
     </header>
 
-    <!-- Ana Ekran (Hero) -->
     <section class="hero">
         <h1>Geleceğin Web Tarayıcısı</h1>
         <p>GEBROWS ile daha hızlı, güvenli ve kişiselleştirilmiş bir internet deneyimine adım atın.</p>
         
-        <!-- İndirme Bağlantısı -->
         <a href="https://github.com/malitalikali1-cmyk/Gebrowser/releases/download/v1.0.0/GEBROWS-Setup.exe" class="download-btn">
             <i class="fas fa-download"></i> GEBROWS'u İndir
         </a>
 
-        <!-- Beğen Butonu -->
         <div class="like-container">
             <button id="likeBtn" class="like-btn" onclick="toggleLike()">
                 <i class="fas fa-thumbs-up"></i>
@@ -209,7 +204,6 @@
         </div>
     </section>
 
-    <!-- Özellikler Bölümü -->
     <section class="features" id="ozellikler">
         <div class="feature-card">
             <i class="fas fa-bolt"></i>
@@ -228,17 +222,15 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <p>&copy; 2026 GEBROWS. Tüm hakları saklıdır.</p>
     </footer>
 
-    <!-- Işık Hızında Çalışan & Geri Almalı JavaScript Kodu -->
     <script>
-        const namespace = "gebrows_official_2026";
+        const namespace = "gebrows_live_v2";
         const key = "likes";
-        
-        let userHasLiked = localStorage.getItem('user_has_liked_gebrowser') === 'true';
+
+        let userHasLiked = localStorage.getItem('gebrows_liked_v2') === 'true';
         let currentLikes = 0;
 
         function formatLikes(num) {
@@ -249,7 +241,6 @@
             return num;
         }
 
-        // Arayüzü anında güncelle
         function renderUI() {
             const btn = document.getElementById('likeBtn');
             const text = document.getElementById('likeText');
@@ -266,12 +257,13 @@
             }
         }
 
-        // Sunucudan mevcut toplamı çek
         function fetchGlobalLikes() {
             fetch(`https://api.counterapi.dev/v1/${namespace}/${key}`)
                 .then(res => res.json())
                 .then(data => {
-                    currentLikes = data.count || 0;
+                    if (data && typeof data.count === 'number') {
+                        currentLikes = data.count;
+                    }
                     renderUI();
                 })
                 .catch(() => {
@@ -279,30 +271,40 @@
                 });
         }
 
-        // Tıklama İşlemi (Işık Hızında & Geri Almalı)
         function toggleLike() {
             if (!userHasLiked) {
-                // ANINDA +1 Yap
                 userHasLiked = true;
                 currentLikes++;
-                localStorage.setItem('user_has_liked_gebrowser', 'true');
+                localStorage.setItem('gebrows_liked_v2', 'true');
                 renderUI();
 
-                // Arka planda sunucuda +1 arttır
-                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`).catch(() => {});
+                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && typeof data.count === 'number') {
+                            currentLikes = data.count;
+                            renderUI();
+                        }
+                    })
+                    .catch(() => {});
             } else {
-                // ANINDA GERİ AL (-1 Yap)
                 userHasLiked = false;
                 currentLikes = Math.max(0, currentLikes - 1);
-                localStorage.setItem('user_has_liked_gebrowser', 'false');
+                localStorage.setItem('gebrows_liked_v2', 'false');
                 renderUI();
 
-                // Arka planda sunucuda -1 düşür
-                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/down`).catch(() => {});
+                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/down`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data && typeof data.count === 'number') {
+                            currentLikes = data.count;
+                            renderUI();
+                        }
+                    })
+                    .catch(() => {});
             }
         }
 
-        // Sayfa Yüklendiğinde Başlat
         renderUI();
         fetchGlobalLikes();
     </script>
