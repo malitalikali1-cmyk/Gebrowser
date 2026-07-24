@@ -93,7 +93,7 @@
             background: linear-gradient(135deg, #0369a1, #1d4ed8);
         }
 
-        /* --- Beğen Butonu Stilleri --- */
+        /* --- YouTube Tarzı Kalpli Beğen Butonu Stilleri --- */
         .like-container {
             margin-top: 10px;
         }
@@ -119,9 +119,15 @@
             box-shadow: 0 0 25px rgba(56, 189, 248, 0.5);
         }
 
+        /* Beğenildiğinde YouTube Kırmızı/Pembe Kalp Teması */
         .like-btn.liked {
-            background: #38bdf8;
-            color: #0f172a;
+            background: #ff4e45;
+            color: #ffffff;
+            border-color: #ff4e45;
+        }
+
+        .like-btn.liked svg {
+            fill: #ffffff !important;
         }
 
         .like-btn:active {
@@ -197,9 +203,11 @@
 
         <div class="like-container">
             <button id="likeBtn" class="like-btn" onclick="toggleLike()">
-                <i class="fas fa-thumbs-up"></i>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.25 3.5c3.223 0 5.75 2.735 5.75 6 0 3.99-2.529 6.995-4.862 8.929-2.355 1.95-4.703 2.972-4.74 2.988l-.398.174-.398-.174c-.037-.016-2.385-1.038-4.74-2.988C4.53 16.496 2 13.49 2 9.5c0-3.265 2.527-6 5.75-6 1.697 0 3.206.765 4.25 1.96 1.044-1.195 2.553-1.96 4.25-1.96z"/>
+                </svg>
                 <span id="likeText">Beğen</span>
-                <span id="likeCount" class="like-count">142</span>
+                <span id="likeCount" class="like-count">1</span>
             </button>
         </div>
     </section>
@@ -227,25 +235,17 @@
     </footer>
 
     <script>
-        // Sayfanın başlangıç beğenisi ve kullanıcı durumu
-        let totalLikes = parseInt(localStorage.getItem('gebrows_total_likes')) || 142;
-        let userHasLiked = localStorage.getItem('gebrows_user_liked') === 'true';
+        let currentLikes = parseInt(localStorage.getItem('gebrows_yt_likes')) || 1;
+        let isLiked = localStorage.getItem('gebrows_yt_user_liked') === 'true';
 
-        function formatLikes(num) {
-            if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace('.0', '') + 'Mr';
-            if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'Mn';
-            if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + 'B';
-            return num;
-        }
-
-        function renderUI() {
+        function updateDisplay() {
             const btn = document.getElementById('likeBtn');
             const text = document.getElementById('likeText');
             const count = document.getElementById('likeCount');
 
-            count.innerText = formatLikes(totalLikes);
+            count.innerText = currentLikes;
 
-            if (userHasLiked) {
+            if (isLiked) {
                 btn.classList.add('liked');
                 text.innerText = "Beğenildi";
             } else {
@@ -255,24 +255,21 @@
         }
 
         function toggleLike() {
-            if (!userHasLiked) {
-                // Beğenildi: Artır ve kaydet
-                userHasLiked = true;
-                totalLikes++;
-                localStorage.setItem('gebrows_user_liked', 'true');
-                localStorage.setItem('gebrows_total_likes', totalLikes);
+            if (!isLiked) {
+                isLiked = true;
+                currentLikes++;
             } else {
-                // Tekrar basılırsa beğeniyi geri al (TikTok/YouTube mantığı: eksiye düşer veya eski haline döner)
-                userHasLiked = false;
-                totalLikes = Math.max(0, totalLikes - 1);
-                localStorage.setItem('gebrows_user_liked', 'false');
-                localStorage.setItem('gebrows_total_likes', totalLikes);
+                isLiked = false;
+                currentLikes = Math.max(1, currentLikes - 1);
             }
-            renderUI();
+
+            localStorage.setItem('gebrows_yt_user_liked', isLiked);
+            localStorage.setItem('gebrows_yt_likes', currentLikes);
+
+            updateDisplay();
         }
 
-        // Sayfa açıldığında ekranı hazırla
-        renderUI();
+        updateDisplay();
     </script>
 
 </body>
