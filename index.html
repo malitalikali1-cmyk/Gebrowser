@@ -233,37 +233,29 @@
         <p>&copy; 2026 GEBROWS. Tüm hakları saklıdır.</p>
     </footer>
 
-    <!-- Canlı Veritabanlı Beğeni JavaScript Kodu -->
+    <!-- Işık Hızında Çalışan & Geri Almalı JavaScript Kodu -->
     <script>
         const namespace = "gebrows_official_2026";
         const key = "likes";
+        
         let userHasLiked = localStorage.getItem('user_has_liked_gebrowser') === 'true';
+        let currentLikes = 0;
 
         function formatLikes(num) {
+            if (num < 0) num = 0;
             if (num >= 1000000000) return (num / 1000000000).toFixed(1).replace('.0', '') + 'Mr';
             if (num >= 1000000) return (num / 1000000).toFixed(1).replace('.0', '') + 'Mn';
             if (num >= 1000) return (num / 1000).toFixed(1).replace('.0', '') + 'B';
             return num;
         }
 
-        function getGlobalLikes() {
-            fetch(`https://api.counterapi.dev/v1/${namespace}/${key}`)
-                .then(res => {
-                    if (!res.ok) throw new Error('Henüz veri yok');
-                    return res.json();
-                })
-                .then(data => {
-                    let total = data.count || 0;
-                    document.getElementById('likeCount').innerText = formatLikes(total);
-                })
-                .catch(() => {
-                    document.getElementById('likeCount').innerText = "0";
-                });
-        }
-
-        function updateBtnState() {
+        // Arayüzü anında güncelle
+        function renderUI() {
             const btn = document.getElementById('likeBtn');
             const text = document.getElementById('likeText');
+            const count = document.getElementById('likeCount');
+
+            count.innerText = formatLikes(currentLikes);
 
             if (userHasLiked) {
                 btn.classList.add('liked');
@@ -274,22 +266,45 @@
             }
         }
 
+        // Sunucudan mevcut toplamı çek
+        function fetchGlobalLikes() {
+            fetch(`https://api.counterapi.dev/v1/${namespace}/${key}`)
+                .then(res => res.json())
+                .then(data => {
+                    currentLikes = data.count || 0;
+                    renderUI();
+                })
+                .catch(() => {
+                    renderUI();
+                });
+        }
+
+        // Tıklama İşlemi (Işık Hızında & Geri Almalı)
         function toggleLike() {
             if (!userHasLiked) {
-                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`)
-                    .then(res => res.json())
-                    .then(data => {
-                        document.getElementById('likeCount').innerText = formatLikes(data.count);
-                        userHasLiked = true;
-                        localStorage.setItem('user_has_liked_gebrowser', 'true');
-                        updateBtnState();
-                    })
-                    .catch(err => console.error("Beğeni gönderilemedi:", err));
+                // ANINDA +1 Yap
+                userHasLiked = true;
+                currentLikes++;
+                localStorage.setItem('user_has_liked_gebrowser', 'true');
+                renderUI();
+
+                // Arka planda sunucuda +1 arttır
+                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/up`).catch(() => {});
+            } else {
+                // ANINDA GERİ AL (-1 Yap)
+                userHasLiked = false;
+                currentLikes = Math.max(0, currentLikes - 1);
+                localStorage.setItem('user_has_liked_gebrowser', 'false');
+                renderUI();
+
+                // Arka planda sunucuda -1 düşür
+                fetch(`https://api.counterapi.dev/v1/${namespace}/${key}/down`).catch(() => {});
             }
         }
 
-        updateBtnState();
-        getGlobalLikes();
+        // Sayfa Yüklendiğinde Başlat
+        renderUI();
+        fetchGlobalLikes();
     </script>
 
 </body>
